@@ -48,6 +48,16 @@ body {
 .welcome { display: grid; gap: 12px; text-align: center; padding: 24px 8px; }
 .welcome h2 { margin: 8px 0; font-size: 22px; }
 .welcome p { margin: 0 0 8px; color: var(--muted); }
+.monthly { text-align: left; margin-top: 8px; }
+.monthly-title { font-size: 16px; margin: 8px 0 8px; color: var(--muted); }
+.monthly-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.month-card { background: #1a1b25; border: 1px solid #2a2d3f; border-radius: 14px; padding: 12px; display: grid; gap: 6px; text-align: left; }
+.month-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.month-name { font-weight: 700; }
+.month-saving { font-weight: 800; }
+.month-saving.pos { color: var(--green); }
+.month-saving.neg { color: var(--red); }
+.month-stats { display: grid; gap: 4px; color: var(--muted); font-size: 12px; }
 
 .toolbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .toolbar h2 { margin: 0; font-size: 18px; }
@@ -103,12 +113,14 @@ input[type="text"], input[type="number"], input[type="date"], input[list] {
   .toolbar { justify-content: start; gap: 12px; }
   .filters { margin-left: auto; }
   .app-main { padding-bottom: 120px; }
+  .monthly-list { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 900px) {
   .app-main { max-width: 960px; }
   .app-title { font-size: 20px; }
   .balance strong { font-size: 20px; }
+  .monthly-list { grid-template-columns: repeat(4, 1fr); }
 }
 
 

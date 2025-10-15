@@ -35,6 +35,7 @@
   const emptyStateEl = $("#emptyState");
   const template = $("#txItemTemplate");
   const liveRegion = $("#liveRegion");
+  const monthlyListEl = $("#monthlyList");
 
   // Stats elements
   const statIncomeEl = $("#statIncome");
@@ -215,6 +216,52 @@
     }
   }
 
+  // --- Monthly Summary ---
+  function monthKeyFor(dateIso) {
+    return dateIso.slice(0, 7); // YYYY-MM
+  }
+
+  function monthLabel(key) {
+    const [y, m] = key.split("-").map(Number);
+    const d = new Date(y, m - 1, 1);
+    return d.toLocaleDateString("es-AR", { month: "long", year: "numeric" });
+  }
+
+  function getMonthlySummary() {
+    /** @type {Record<string, {income:number, expense:number}>} */
+    const map = {};
+    for (const t of transactions) {
+      const key = monthKeyFor(t.date);
+      if (!map[key]) map[key] = { income: 0, expense: 0 };
+      if (t.type === "income") map[key].income += t.amount; else map[key].expense += t.amount;
+    }
+    const keys = Object.keys(map).sort((a, b) => b.localeCompare(a)); // desc
+    return keys.map((k) => ({ key: k, label: monthLabel(k), income: map[k].income, expense: map[k].expense, saving: map[k].income - map[k].expense }));
+  }
+
+  function renderMonthlySummary() {
+    if (!monthlyListEl) return;
+    const months = getMonthlySummary().slice(0, 6);
+    monthlyListEl.innerHTML = "";
+    if (months.length === 0) return;
+    for (const m of months) {
+      const card = document.createElement("div");
+      card.className = "month-card";
+      const savingClass = m.saving >= 0 ? "pos" : "neg";
+      card.innerHTML = `
+        <div class="month-head">
+          <div class="month-name">${m.label}</div>
+          <div class="month-saving ${savingClass}">${fmtCurrency(m.saving)}</div>
+        </div>
+        <div class="month-stats">
+          <div>Ingresos: <strong style="color: var(--green)">${fmtCurrency(m.income)}</strong></div>
+          <div>Gastos: <strong style="color: var(--red)">${fmtCurrency(m.expense)}</strong></div>
+        </div>
+      `;
+      monthlyListEl.appendChild(card);
+    }
+  }
+
   // --- Navigation ---
   function show(view) {
     Object.values(views).forEach((v) => v.classList.remove("is-active"));
@@ -276,6 +323,7 @@
       renderStats();
       renderCategoryFilters();
       renderList();
+      renderMonthlySummary();
       announce("Movimiento eliminado");
       haptic("warning");
     }
@@ -331,6 +379,7 @@
     renderStats();
     renderCategoryFilters();
     renderList();
+    renderMonthlySummary();
     show("list");
     resetForm(currentType);
   });
@@ -344,6 +393,7 @@
     renderStats();
     renderCategoryFilters();
     renderList();
+    renderMonthlySummary();
 
     // Splash auto-hide to welcome then list
     show("splash");
