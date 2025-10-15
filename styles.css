@@ -55,6 +55,10 @@ body {
 .welcome { display: grid; gap: 12px; text-align: center; padding: 24px 8px; }
 .welcome h2 { margin: 8px 0; font-size: 22px; }
 .welcome p { margin: 0 0 8px; color: var(--muted); }
+.welcome-panels { display: grid; gap: 12px; margin-top: 8px; }
+.panel { text-align: left; background: var(--surface); border: 1px solid #222432; border-radius: 14px; padding: 12px; box-shadow: var(--shadow); }
+.panel-title { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 14px; color: var(--muted); letter-spacing: .2px; text-transform: uppercase; }
+.panel-title .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--lila-700), var(--lila-400)); display: inline-block; }
 .hint { color: var(--lila-300); background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.25); padding: 10px 12px; border-radius: 12px; }
 .tips { margin: 8px 0 0; padding-left: 18px; color: var(--muted); text-align: left; }
 .tips li { margin: 4px 0; }
@@ -63,8 +67,8 @@ body {
 .monthly-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .month-card { background: #1a1b25; border: 1px solid #2a2d3f; border-radius: 14px; padding: 12px; display: grid; gap: 6px; text-align: left; }
 .month-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.month-name { font-weight: 700; }
-.month-saving { font-weight: 800; }
+.month-name { font-weight: 700; font-feature-settings: "tnum" 1; }
+.month-saving { font-weight: 800; font-feature-settings: "tnum" 1; }
 .month-saving.pos { color: var(--green); }
 .month-saving.neg { color: var(--red); }
 .month-stats { display: grid; gap: 4px; color: var(--muted); font-size: 12px; }

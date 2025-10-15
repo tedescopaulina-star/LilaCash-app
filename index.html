@@ -50,18 +50,23 @@
                     Sugerencia: tocá "+" para agregar un movimiento. Usá los filtros para ver solo ingresos o gastos.
                 </div>
                 <button class="btn primary" data-nav="list">Ir a movimientos</button>
-                <ul class="tips" aria-label="Guía rápida">
-                    <li>Editá tocando un ítem de la lista.</li>
-                    <li>Escribí la categoría libremente; se guardará para sugerencias.</li>
-                    <li>Todo queda guardado en tu dispositivo (localStorage).</li>
-                </ul>
-                <section class="monthly" aria-label="Resumen mensual">
-                    <h3 class="monthly-title">Resumen mensual</h3>
-                    <div id="monthlyList" class="monthly-list" aria-live="polite">
-                        <!-- Render dinámico de meses -->
-                    </div>
-                </section>
-            </div>
+
+                <div class="welcome-panels">
+                    <section class="panel monthly" aria-label="Resumen mensual">
+                        <h3 class="panel-title"><span class="dot"></span> Resumen mensual</h3>
+                        <div id="monthlyList" class="monthly-list" aria-live="polite">
+                            <!-- Render dinámico de meses -->
+                        </div>
+                    </section>
+                    <section class="panel guides" aria-label="Guía rápida">
+                        <h3 class="panel-title"><span class="dot"></span> Guía rápida</h3>
+                        <ul class="tips">
+                            <li>Editá tocando un ítem de la lista.</li>
+                            <li>La categoría es libre; se sugiere para futuros registros.</li>
+                            <li>Todos los datos viven en tu dispositivo (localStorage).</li>
+                        </ul>
+                    </section>
+                </div>
         </section>
 
         <!-- Lista / Movimientos -->
