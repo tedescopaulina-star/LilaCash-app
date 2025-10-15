@@ -23,9 +23,18 @@
     </svg>
     <header class="app-header" role="banner">
         <h1 class="app-title">LilaCash</h1>
-        <div class="balance" aria-live="polite">
-            <span>Total</span>
-            <strong id="totalBalance">$0</strong>
+        <div class="header-right">
+            <label class="currency" aria-label="Seleccionar moneda">
+                <select id="currencySelect" title="Moneda">
+                    <option value="ARS">ARS</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </label>
+            <div class="balance" aria-live="polite">
+                <span>Total</span>
+                <strong id="totalBalance">$0</strong>
+            </div>
         </div>
     </header>
 
