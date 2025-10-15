@@ -36,6 +36,8 @@
   const template = $("#txItemTemplate");
   const liveRegion = $("#liveRegion");
   const monthlyListEl = $("#monthlyList");
+  const loaderEl = $("#loader");
+  const toastEl = $("#toast");
 
   // Stats elements
   const statIncomeEl = $("#statIncome");
@@ -282,6 +284,20 @@
     } catch {}
   }
 
+  function showLoader(show = true) {
+    if (!loaderEl) return;
+    loaderEl.hidden = !show;
+  }
+
+  let toastTimer = null;
+  function showToast(msg, ms = 1600) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toastEl.hidden = true; }, ms);
+  }
+
   // --- Form Logic ---
   function resetForm(type = "income") {
     txIdEl.value = "";
@@ -326,6 +342,7 @@
       renderMonthlySummary();
       announce("Movimiento eliminado");
       haptic("warning");
+      showToast("Eliminado");
     }
   }
 
@@ -366,13 +383,19 @@
     };
 
     if (txIdEl.value) {
+      showLoader(true);
       updateTx(txIdEl.value, data);
+      showLoader(false);
       announce("Movimiento actualizado");
       haptic("success");
+      showToast("Actualizado");
     } else {
+      showLoader(true);
       createTx(data);
+      showLoader(false);
       announce("Movimiento agregado");
       haptic("success");
+      showToast("Guardado");
     }
 
     renderBalance();
