@@ -60,6 +60,10 @@
   const dateEl = $("#date");
   const segButtons = $$(".seg-btn");
   let currentType = "income";
+  // Error fields
+  const amountErrorEl = $("#amountError");
+  const categoryErrorEl = $("#categoryError");
+  const dateErrorEl = $("#dateError");
 
   // --- Storage ---
   function load() {
@@ -332,7 +336,7 @@
   }
 
   function onDelete(id) {
-    const ok = confirm("¿Eliminar este movimiento?");
+    const ok = confirm("¿Eliminar este movimiento? Esta acción no se puede deshacer.");
     if (!ok) return;
     if (deleteTx(id)) {
       renderBalance();
@@ -369,9 +373,27 @@
 
   formEl.addEventListener("submit", (e) => {
     e.preventDefault();
+    // reset errors
+    amountErrorEl.textContent = "";
+    categoryErrorEl.textContent = "";
+    dateErrorEl.textContent = "";
+
     const amount = Number(amountEl.value);
+    let hasErr = false;
     if (!isFinite(amount) || amount <= 0) {
-      amountEl.focus();
+      amountErrorEl.textContent = "Ingresá un monto válido mayor a 0.";
+      hasErr = true;
+    }
+    if (!categoryEl.value.trim()) {
+      categoryErrorEl.textContent = "Ingresá una categoría.";
+      hasErr = true;
+    }
+    if (!dateEl.value) {
+      dateErrorEl.textContent = "Seleccioná una fecha.";
+      hasErr = true;
+    }
+    if (hasErr) {
+      (amount <= 0 ? amountEl : (!categoryEl.value ? categoryEl : dateEl)).focus();
       return;
     }
     const data = {

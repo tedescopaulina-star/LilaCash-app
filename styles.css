@@ -55,6 +55,9 @@ body {
 .welcome { display: grid; gap: 12px; text-align: center; padding: 24px 8px; }
 .welcome h2 { margin: 8px 0; font-size: 22px; }
 .welcome p { margin: 0 0 8px; color: var(--muted); }
+.hint { color: var(--lila-300); background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.25); padding: 10px 12px; border-radius: 12px; }
+.tips { margin: 8px 0 0; padding-left: 18px; color: var(--muted); text-align: left; }
+.tips li { margin: 4px 0; }
 .monthly { text-align: left; margin-top: 8px; }
 .monthly-title { font-size: 16px; margin: 8px 0 8px; color: var(--muted); }
 .monthly-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -96,6 +99,7 @@ select { appearance: none; background: var(--surface); color: var(--text); borde
 .form { display: grid; gap: 12px; background: var(--surface); padding: 16px; border: 1px solid #222432; border-radius: 14px; box-shadow: var(--shadow); }
 .field { display: grid; gap: 6px; }
 .field span { color: var(--muted); font-size: 12px; }
+.error { color: #ffb4b4; font-size: 12px; min-height: 16px; }
 input[type="text"], input[type="number"], input[type="date"], input[list] {
   width: 100%; background: #1a1b25; color: var(--text); border: 1px solid #2a2d3f; border-radius: 12px; padding: 12px 14px; font-size: 16px; min-height: 44px;
 }

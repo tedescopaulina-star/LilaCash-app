@@ -46,6 +46,9 @@
             <div class="welcome">
                 <h2 id="welcomeTitle">Bienvenida</h2>
                 <p>Registra tus ingresos y gastos, clasifícalos por categoría y mantén tu balance al día.</p>
+                <div class="hint" role="note">
+                    Sugerencia: tocá "+" para agregar un movimiento. Usá los filtros para ver solo ingresos o gastos.
+                </div>
                 <button class="btn primary" data-nav="list">Ir a movimientos</button>
                 <section class="monthly" aria-label="Resumen mensual">
                     <h3 class="monthly-title">Resumen mensual</h3>
@@ -53,6 +56,11 @@
                         <!-- Render dinámico de meses -->
                     </div>
                 </section>
+                <ul class="tips" aria-label="Guía rápida">
+                    <li>Editá tocando un ítem de la lista.</li>
+                    <li>Escribí la categoría libremente; se guardará para sugerencias.</li>
+                    <li>Todo queda guardado en tu dispositivo (localStorage).</li>
+                </ul>
             </div>
         </section>
 
@@ -114,6 +122,7 @@
         <section id="view-form" class="view" aria-labelledby="formTitle">
             <form id="txForm" class="form" autocomplete="off">
                 <h2 id="formTitle">Nuevo movimiento</h2>
+                <p class="hint" id="formHint">Completá el monto, la categoría y la fecha. Podés agregar una nota opcional.</p>
                 <input type="hidden" id="txId">
 
                 <div class="segmented" role="tablist" aria-label="Tipo de movimiento">
@@ -124,12 +133,14 @@
                 <label class="field">
                     <span>Monto</span>
                     <input id="amount" name="amount" type="number" step="0.01" inputmode="decimal" autocomplete="off" enterkeyhint="next" required placeholder="0.00">
+                    <div id="amountError" class="error" aria-live="polite"></div>
                 </label>
 
                 <label class="field">
                     <span>Categoría</span>
                     <input id="category" name="category" list="categoryList" inputmode="text" autocomplete="off" autocapitalize="words" enterkeyhint="next" placeholder="Ej: Comida" required>
                     <datalist id="categoryList"></datalist>
+                    <div id="categoryError" class="error" aria-live="polite"></div>
                 </label>
 
                 <label class="field">
@@ -140,6 +151,7 @@
                 <label class="field">
                     <span>Fecha</span>
                     <input id="date" name="date" type="date" enterkeyhint="done" required>
+                    <div id="dateError" class="error" aria-live="polite"></div>
                 </label>
 
                 <div class="form-actions">
