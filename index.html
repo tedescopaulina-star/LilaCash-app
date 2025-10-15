@@ -70,23 +70,23 @@
 
                 <label class="field">
                     <span>Monto</span>
-                    <input id="amount" type="number" step="0.01" inputmode="decimal" required placeholder="0.00">
+                    <input id="amount" name="amount" type="number" step="0.01" inputmode="decimal" autocomplete="off" enterkeyhint="next" required placeholder="0.00">
                 </label>
 
                 <label class="field">
                     <span>Categoría</span>
-                    <input id="category" list="categoryList" placeholder="Ej: Comida" required>
+                    <input id="category" name="category" list="categoryList" inputmode="text" autocomplete="off" autocapitalize="words" enterkeyhint="next" placeholder="Ej: Comida" required>
                     <datalist id="categoryList"></datalist>
                 </label>
 
                 <label class="field">
                     <span>Notas</span>
-                    <input id="note" type="text" maxlength="80" placeholder="Opcional">
+                    <input id="note" name="note" type="text" maxlength="80" inputmode="text" autocomplete="off" autocapitalize="sentences" enterkeyhint="next" placeholder="Opcional">
                 </label>
 
                 <label class="field">
                     <span>Fecha</span>
-                    <input id="date" type="date" required>
+                    <input id="date" name="date" type="date" enterkeyhint="done" required>
                 </label>
 
                 <div class="form-actions">
