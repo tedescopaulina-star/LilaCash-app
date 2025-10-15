@@ -6,7 +6,17 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   let currentCurrency = localStorage.getItem("lilacash:currency") || "ARS";
-  const fmtCurrency = (n) => new Intl.NumberFormat("es-AR", { style: "currency", currency: currentCurrency, maximumFractionDigits: 2 }).format(n);
+  function getCurrencyLocale(code) {
+    if (code === "USD") return "en-US";
+    if (code === "EUR") return "es-ES";
+    return "es-AR"; // ARS por defecto
+  }
+  const fmtCurrency = (n) => new Intl.NumberFormat(getCurrencyLocale(currentCurrency), {
+    style: "currency",
+    currency: currentCurrency,
+    currencyDisplay: "narrowSymbol",
+    maximumFractionDigits: 2,
+  }).format(n);
   const fmtDate = (iso) => new Date(iso).toLocaleDateString("es-AR", { year: "numeric", month: "2-digit", day: "2-digit" });
 
   const STORAGE_KEY = "lilacash:transactions";
