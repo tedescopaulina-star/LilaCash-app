@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>LilaCash · Control de gastos</title>
+    <meta name="theme-color" content="#6c2bd9">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header" role="banner">
+        <h1 class="app-title">LilaCash</h1>
+        <div class="balance" aria-live="polite">
+            <span>Total</span>
+            <strong id="totalBalance">$0</strong>
+        </div>
+    </header>
+
+    <main id="app" class="app-main" role="main">
+        <!-- Bienvenida -->
+        <section id="view-welcome" class="view is-active" aria-labelledby="welcomeTitle">
+            <div class="welcome">
+                <h2 id="welcomeTitle">Bienvenida</h2>
+                <p>Registra tus ingresos y gastos, clasifícalos por categoría y mantén tu balance al día.</p>
+                <button class="btn primary" data-nav="list">Ir a movimientos</button>
+            </div>
+        </section>
+
+        <!-- Lista / Movimientos -->
+        <section id="view-list" class="view" aria-labelledby="listTitle">
+            <div class="toolbar">
+                <h2 id="listTitle">Movimientos</h2>
+                <div class="filters">
+                    <select id="filterType" aria-label="Filtrar por tipo">
+                        <option value="all">Todos</option>
+                        <option value="income">Ingresos</option>
+                        <option value="expense">Gastos</option>
+                    </select>
+                    <select id="filterCategory" aria-label="Filtrar por categoría">
+                        <option value="all">Categorías</option>
+                    </select>
+                    <select id="sortBy" aria-label="Ordenar por">
+                        <option value="date_desc">Fecha (nuevos primero)</option>
+                        <option value="date_asc">Fecha (antiguos primero)</option>
+                        <option value="amount_desc">Monto (alto a bajo)</option>
+                        <option value="amount_asc">Monto (bajo a alto)</option>
+                    </select>
+                </div>
+            </div>
+
+            <ul id="txList" class="tx-list" aria-live="polite" aria-label="Lista de movimientos">
+                <!-- Render dinámico -->
+            </ul>
+
+            <div class="empty" id="emptyState" hidden>
+                <p>No hay movimientos aún. Agrega uno con el botón "+".</p>
+            </div>
+        </section>
+
+        <!-- Formulario Crear/Editar -->
+        <section id="view-form" class="view" aria-labelledby="formTitle">
+            <form id="txForm" class="form" autocomplete="off">
+                <h2 id="formTitle">Nuevo movimiento</h2>
+                <input type="hidden" id="txId">
+
+                <div class="segmented" role="tablist" aria-label="Tipo de movimiento">
+                    <button type="button" role="tab" aria-selected="true" data-type="income" class="seg-btn is-active">Ingreso</button>
+                    <button type="button" role="tab" aria-selected="false" data-type="expense" class="seg-btn">Gasto</button>
+                </div>
+
+                <label class="field">
+                    <span>Monto</span>
+                    <input id="amount" type="number" step="0.01" inputmode="decimal" required placeholder="0.00">
+                </label>
+
+                <label class="field">
+                    <span>Categoría</span>
+                    <input id="category" list="categoryList" placeholder="Ej: Comida" required>
+                    <datalist id="categoryList"></datalist>
+                </label>
+
+                <label class="field">
+                    <span>Notas</span>
+                    <input id="note" type="text" maxlength="80" placeholder="Opcional">
+                </label>
+
+                <label class="field">
+                    <span>Fecha</span>
+                    <input id="date" type="date" required>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">Guardar</button>
+                    <button type="button" id="cancelEdit" class="btn ghost">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <nav class="tabbar" role="navigation" aria-label="Navegación principal">
+        <button class="tab-btn" data-nav="welcome" aria-label="Bienvenida">🏠</button>
+        <button class="tab-btn" data-nav="list" aria-label="Movimientos">📋</button>
+        <button class="tab-btn fab" data-nav="form" aria-label="Agregar">＋</button>
+    </nav>
+
+    <template id="txItemTemplate">
+        <li class="tx-item" data-id="">
+            <button class="tx-main" type="button">
+                <span class="tx-left">
+                    <span class="tx-category"></span>
+                    <span class="tx-note"></span>
+                </span>
+                <span class="tx-right">
+                    <span class="tx-amount"></span>
+                    <span class="tx-date"></span>
+                </span>
+            </button>
+            <div class="tx-actions">
+                <button class="icon-btn edit" title="Editar" aria-label="Editar">✏️</button>
+                <button class="icon-btn delete" title="Eliminar" aria-label="Eliminar">🗑️</button>
+            </div>
+        </li>
+    </template>
+
+    <script src="script.js" defer></script>
+    
+    <!-- Estado inicial accesible -->
+    <div class="sr-only" aria-live="polite" id="liveRegion"></div>
+</body>
+</html>
+
+
