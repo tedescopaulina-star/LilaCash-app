@@ -5,7 +5,8 @@
   // --- Helpers ---
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const fmtCurrency = (n) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 2 }).format(n);
+  let currentCurrency = localStorage.getItem("lilacash:currency") || "ARS";
+  const fmtCurrency = (n) => new Intl.NumberFormat("es-AR", { style: "currency", currency: currentCurrency, maximumFractionDigits: 2 }).format(n);
   const fmtDate = (iso) => new Date(iso).toLocaleDateString("es-AR", { year: "numeric", month: "2-digit", day: "2-digit" });
 
   const STORAGE_KEY = "lilacash:transactions";
@@ -31,6 +32,7 @@
     form: $("#view-form"),
   };
   const totalBalanceEl = $("#totalBalance");
+  const currencySelectEl = $("#currencySelect");
   const listEl = $("#txList");
   const emptyStateEl = $("#emptyState");
   const template = $("#txItemTemplate");
@@ -436,6 +438,18 @@
     if (!dateEl.value) dateEl.valueAsDate = new Date();
     // Ensure loader is hidden on start
     showLoader(false);
+    // Initialize currency select
+    if (currencySelectEl) {
+      currencySelectEl.value = currentCurrency;
+      currencySelectEl.addEventListener("change", () => {
+        currentCurrency = currencySelectEl.value;
+        localStorage.setItem("lilacash:currency", currentCurrency);
+        renderBalance();
+        renderStats();
+        renderList();
+        renderMonthlySummary();
+      });
+    }
     renderBalance();
     renderStats();
     renderCategoryFilters();
