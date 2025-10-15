@@ -22,6 +22,7 @@ body {
   color: var(--text);
   font-size: 16px;
   line-height: 1.35;
+  overflow-x: hidden;
 }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -37,7 +38,7 @@ body {
 .balance span { color: var(--muted); font-size: 12px; }
 .balance strong { font-size: 18px; }
 
-.app-main { padding: 16px; padding-bottom: 96px; max-width: 840px; margin: 0 auto; }
+.app-main { padding: 16px; padding-bottom: 96px; max-width: 840px; margin: 0 auto; overflow-x: hidden; }
 .view { display: none; }
 .view.is-active { display: block; }
 
@@ -59,18 +60,20 @@ body {
 .month-saving.neg { color: var(--red); }
 .month-stats { display: grid; gap: 4px; color: var(--muted); font-size: 12px; }
 
-.toolbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.toolbar h2 { margin: 0; font-size: 18px; }
-.filters { display: flex; gap: 8px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.toolbar h2 { margin: 0; font-size: 18px; flex: 1 1 100%; }
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+select { width: 100%; }
 select { appearance: none; background: var(--surface); color: var(--text); border: 1px solid #222432; border-radius: 10px; padding: 10px 12px; font-size: 16px; min-height: 44px; }
 
 .tx-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .tx-item { background: var(--surface); border: 1px solid #222432; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
-.tx-main { width: 100%; background: none; color: inherit; border: 0; padding: 12px; display: flex; align-items: center; justify-content: space-between; text-align: left; }
-.tx-left { display: grid; gap: 2px; }
+.tx-main { width: 100%; background: none; color: inherit; border: 0; padding: 12px; display: flex; align-items: center; justify-content: space-between; text-align: left; min-width: 0; }
+.tx-left { display: grid; gap: 2px; min-width: 0; max-width: 60%; }
 .tx-category { font-weight: 600; }
 .tx-note { color: var(--muted); font-size: 12px; }
-.tx-right { display: grid; text-align: right; gap: 2px; }
+.tx-right { display: grid; text-align: right; gap: 2px; min-width: 0; max-width: 40%; }
+.tx-category, .tx-note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tx-amount { font-weight: 700; }
 .tx-date { color: var(--muted); font-size: 12px; }
 .tx-actions { display: flex; gap: 8px; padding: 0 12px 12px; }
@@ -110,8 +113,9 @@ input[type="text"], input[type="number"], input[type="date"], input[list] {
 .fab { background: linear-gradient(135deg, var(--lila-700), var(--lila-400)); color: #fff; font-size: 22px; }
 
 @media (min-width: 600px) {
-  .toolbar { justify-content: start; gap: 12px; }
-  .filters { margin-left: auto; }
+  .toolbar { justify-content: start; gap: 12px; flex-wrap: nowrap; }
+  .toolbar h2 { flex: 0 0 auto; }
+  .filters { margin-left: auto; display: flex; width: auto; }
   .app-main { padding-bottom: 120px; }
   .monthly-list { grid-template-columns: repeat(3, 1fr); }
 }
