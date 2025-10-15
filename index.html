@@ -17,8 +17,16 @@
     </header>
 
     <main id="app" class="app-main" role="main">
+        <!-- Splash -->
+        <section id="view-splash" class="view is-active" aria-label="Pantalla de inicio">
+            <div class="splash">
+                <div class="splash-logo">💜</div>
+                <div class="splash-title">LilaCash</div>
+            </div>
+        </section>
+
         <!-- Bienvenida -->
-        <section id="view-welcome" class="view is-active" aria-labelledby="welcomeTitle">
+        <section id="view-welcome" class="view" aria-labelledby="welcomeTitle">
             <div class="welcome">
                 <h2 id="welcomeTitle">Bienvenida</h2>
                 <p>Registra tus ingresos y gastos, clasifícalos por categoría y mantén tu balance al día.</p>
@@ -47,6 +55,29 @@
                     </select>
                 </div>
             </div>
+
+            <section class="stats" aria-label="Resumen">
+                <div class="stat-card">
+                    <span class="label">Ingresos</span>
+                    <strong id="statIncome">$0</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Gastos</span>
+                    <strong id="statExpense">$0</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Balance</span>
+                    <strong id="statTotal">$0</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Movimientos</span>
+                    <strong id="statCount">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Top categoría</span>
+                    <strong id="statTopCategory">—</strong>
+                </div>
+            </section>
 
             <ul id="txList" class="tx-list" aria-live="polite" aria-label="Lista de movimientos">
                 <!-- Render dinámico -->
