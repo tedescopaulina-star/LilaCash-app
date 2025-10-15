@@ -25,6 +25,7 @@
 
   // --- State Elements ---
   const views = {
+    splash: $("#view-splash"),
     welcome: $("#view-welcome"),
     list: $("#view-list"),
     form: $("#view-form"),
@@ -34,6 +35,13 @@
   const emptyStateEl = $("#emptyState");
   const template = $("#txItemTemplate");
   const liveRegion = $("#liveRegion");
+
+  // Stats elements
+  const statIncomeEl = $("#statIncome");
+  const statExpenseEl = $("#statExpense");
+  const statTotalEl = $("#statTotal");
+  const statCountEl = $("#statCount");
+  const statTopCategoryEl = $("#statTopCategory");
 
   // Filters
   const filterTypeEl = $("#filterType");
@@ -112,10 +120,34 @@
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   }
 
+  function getTopCategory() {
+    const totals = new Map();
+    for (const t of transactions) {
+      const key = t.category || (t.type === "income" ? "Ingreso" : "Gasto");
+      totals.set(key, (totals.get(key) || 0) + t.amount * (t.type === "income" ? 1 : -1));
+    }
+    let best = null;
+    let bestAbs = 0;
+    for (const [cat, val] of totals) {
+      const abs = Math.abs(val);
+      if (abs > bestAbs) { bestAbs = abs; best = { cat, val }; }
+    }
+    return best ? best.cat : "—";
+  }
+
   // --- UI Render ---
   function renderBalance() {
     const { total } = getBalance();
     totalBalanceEl.textContent = fmtCurrency(total);
+  }
+
+  function renderStats() {
+    const { income, expense, total } = getBalance();
+    statIncomeEl.textContent = fmtCurrency(income);
+    statExpenseEl.textContent = fmtCurrency(expense);
+    statTotalEl.textContent = fmtCurrency(total);
+    statCountEl.textContent = String(transactions.length);
+    statTopCategoryEl.textContent = getTopCategory();
   }
 
   function renderCategoryFilters() {
@@ -193,6 +225,16 @@
     liveRegion.textContent = msg;
   }
 
+  function haptic(type = "light") {
+    try {
+      if (navigator.vibrate) {
+        if (type === "success") navigator.vibrate([12, 20]);
+        else if (type === "warning") navigator.vibrate([20, 40]);
+        else navigator.vibrate(10);
+      }
+    } catch {}
+  }
+
   // --- Form Logic ---
   function resetForm(type = "income") {
     txIdEl.value = "";
@@ -231,9 +273,11 @@
     if (!ok) return;
     if (deleteTx(id)) {
       renderBalance();
+      renderStats();
       renderCategoryFilters();
       renderList();
       announce("Movimiento eliminado");
+      haptic("warning");
     }
   }
 
@@ -276,12 +320,15 @@
     if (txIdEl.value) {
       updateTx(txIdEl.value, data);
       announce("Movimiento actualizado");
+      haptic("success");
     } else {
       createTx(data);
       announce("Movimiento agregado");
+      haptic("success");
     }
 
     renderBalance();
+    renderStats();
     renderCategoryFilters();
     renderList();
     show("list");
@@ -294,8 +341,16 @@
     // Default date today
     if (!dateEl.value) dateEl.valueAsDate = new Date();
     renderBalance();
+    renderStats();
     renderCategoryFilters();
     renderList();
+
+    // Splash auto-hide to welcome then list
+    show("splash");
+    setTimeout(() => {
+      show("welcome");
+      setTimeout(() => show("list"), 1200);
+    }, 900);
   }
 
   document.addEventListener("DOMContentLoaded", init);
