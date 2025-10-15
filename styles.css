@@ -127,6 +127,11 @@ input[type="text"], input[type="number"], input[type="date"], input[list] {
 }
 .tab-btn { background: #1a1b25; color: var(--text); border: 1px solid #2a2d3f; border-radius: 14px; padding: 12px 14px; font-size: 18px; min-height: 44px; min-width: 44px; transition: transform .12s ease, background-color .12s ease; }
 .fab { background: linear-gradient(135deg, var(--lila-700), var(--lila-400)); color: #fff; font-size: 22px; }
+/* Center FAB visually */
+.tabbar { grid-template-columns: 1fr auto 1fr; }
+.tabbar .tab-btn:nth-child(1) { justify-self: start; }
+.tabbar .tab-btn:nth-child(2) { justify-self: center; }
+.tabbar .tab-btn:nth-child(3) { justify-self: end; }
 
 /* Focus visible accesible */
 :focus-visible { outline: 2px solid var(--lila-500); outline-offset: 2px; border-radius: 10px; }

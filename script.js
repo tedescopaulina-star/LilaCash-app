@@ -466,11 +466,10 @@
     renderList();
     renderMonthlySummary();
 
-    // Splash auto-hide to welcome then list
+    // Splash auto-hide to Welcome only; user advances manually
     show("splash");
     setTimeout(() => {
       show("welcome");
-      setTimeout(() => show("list"), 1200);
     }, 900);
   }
 
