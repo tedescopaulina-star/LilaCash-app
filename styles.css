@@ -41,6 +41,10 @@ body {
 .view { display: none; }
 .view.is-active { display: block; }
 
+.splash { height: calc(100dvh - 100px); display: grid; place-content: center; gap: 10px; text-align: center; }
+.splash-logo { font-size: 48px; }
+.splash-title { font-size: 28px; font-weight: 800; letter-spacing: 0.8px; background: linear-gradient(135deg, var(--lila-700), var(--lila-400)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
 .welcome { display: grid; gap: 12px; text-align: center; padding: 24px 8px; }
 .welcome h2 { margin: 8px 0; font-size: 22px; }
 .welcome p { margin: 0 0 8px; color: var(--muted); }
@@ -64,6 +68,11 @@ select { appearance: none; background: var(--surface); color: var(--text); borde
 .icon-btn.delete { color: #ffd1d1; }
 
 .empty { text-align: center; color: var(--muted); padding: 16px; }
+
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0 16px; }
+.stat-card { background: #1a1b25; border: 1px solid #2a2d3f; border-radius: 14px; padding: 12px; display: grid; gap: 4px; }
+.stat-card .label { color: var(--muted); font-size: 12px; }
+.stat-card strong { font-size: 18px; }
 
 .form { display: grid; gap: 12px; background: var(--surface); padding: 16px; border: 1px solid #222432; border-radius: 14px; box-shadow: var(--shadow); }
 .field { display: grid; gap: 6px; }
