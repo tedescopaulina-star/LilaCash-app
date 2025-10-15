@@ -286,7 +286,7 @@
 
   function showLoader(show = true) {
     if (!loaderEl) return;
-    loaderEl.hidden = !show;
+    loaderEl.classList.toggle("is-visible", !!show);
   }
 
   let toastTimer = null;
@@ -412,6 +412,8 @@
     transactions = load();
     // Default date today
     if (!dateEl.value) dateEl.valueAsDate = new Date();
+    // Ensure loader is hidden on start
+    showLoader(false);
     renderBalance();
     renderStats();
     renderCategoryFilters();
